@@ -1,14 +1,14 @@
 # Memos MCP Server (SAPA)
 
-Server Model Context Protocol (MCP) untuk [Memos](https://usememos.com/) yang ditulis dengan Go.
-Server ini memungkinkan AI agent membaca, mencari, serta mengelola memo di instance Memos Anda.
+A Model Context Protocol (MCP) server for [Memos](https://usememos.com/) written in Go.
+This server enables AI agents to read, search, and manage memos in your Memos instance.
 
 ## Features
-- **create_memo**: Tambah catatan.
-- **update_memo**: Edit catatan.
-- **delete_memo**: Hapus catatan.
-- **read_memo**: Baca catatan (ID atau terbaru).
-- **search_memos**: Cari catatan pintar (konten, tag, rentang tanggal).
+- **create_memo**: Add a memo.
+- **update_memo**: Edit a memo.
+- **delete_memo**: Delete a memo.
+- **read_memo**: Read a memo (by ID or latest).
+- **search_memos**: Smart search (content, tags, date range).
 
 ## Installation
 
@@ -22,27 +22,27 @@ go build -o memos-mcp.exe ./cmd/server
 
 ## Configuration
 
-Server dapat dikonfigurasi lewat args key-value pada MCP client, flags, atau environment variables.
+The server can be configured via key-value args in the MCP client, flags, or environment variables.
 
 | Parameter | Flag | Env Var | Default | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| **Enable MCP** | `--mcp-enabled` | `MCP_ENABLED` | `true` | Set ke `false` untuk menonaktifkan server. |
-| **Memos URL** | `--memos-url` | `MEMOS_URL` | `http://localhost:5230` | URL instance Memos. |
+| **Enable MCP** | `--mcp-enabled` | `MCP_ENABLED` | `true` | Set to `false` to disable the server. |
+| **Memos URL** | `--memos-url` | `MEMOS_URL` | `http://localhost:5230` | Memos instance URL. |
 | **API Token** | `--memos-token` | `MEMOS_TOKEN` | `""` | Memos API Bearer Token. |
-| **ReadOnly** | (args) `readonly` | - | `false` | Jika `true`, semua aksi tambah/edit/hapus ditolak. |
-| **Disabled** | (args) `disabled` | - | `false` | Jika `true`, MCP server tidak akan berjalan. |
-| **Need Approve** | (args) `needApprove` | - | `false` | Jika `true`, aksi mutasi perlu `confirm=true`. |
+| **ReadOnly** | (args) `readonly` | - | `false` | When `true`, create/edit/delete are blocked. |
+| **Disabled** | (args) `disabled` | - | `false` | When `true`, MCP server will not run. |
+| **Need Approve** | (args) `needApprove` | - | `false` | When `true`, mutations require `confirm=true`. |
 
 ## Usage
 
 ### Run as MCP Server
-Jalankan binary. Komunikasi melalui Stdio.
+Run the binary. Communication uses Stdio.
 ```bash
 ./memos-mcp.exe --memos-url "https://domainmemos.com" --memos-token "memos_pat_****************"
 ```
 
 ### With Claude Desktop / Trae
-Tambahkan pada file konfigurasi MCP Anda:
+Add to your MCP configuration file:
 
 ```json
 {
@@ -69,41 +69,41 @@ Tambahkan pada file konfigurasi MCP Anda:
 }
 ```
 
-## Contoh Pemanggilan Tools
+## Tool Examples
 
-### Baca catatan terbaru
+### Read latest memo
 ```json
 {
   "last": true
 }
 ```
 
-### Baca catatan berdasarkan ID
+### Read memo by ID
 ```json
 {
   "id": "memos/5mggyKHrZvL9mNijQbZ8uG"
 }
 ```
 
-### Tambah catatan (needApprove=true)
+### Create memo (needApprove=true)
 ```json
 {
-  "content": "Catatan baru",
+  "content": "New memo",
   "visibility": "PRIVATE",
   "confirm": true
 }
 ```
 
-### Edit catatan
+### Update memo
 ```json
 {
   "id": "memos/5mggyKHrZvL9mNijQbZ8uG",
-  "content": "Isi diperbarui",
+  "content": "Updated content",
   "confirm": true
 }
 ```
 
-### Hapus catatan
+### Delete memo
 ```json
 {
   "id": "memos/5mggyKHrZvL9mNijQbZ8uG",
@@ -111,11 +111,11 @@ Tambahkan pada file konfigurasi MCP Anda:
 }
 ```
 
-### Cari catatan pintar
+### Smart search
 ```json
 {
-  "query": "laporan",
-  "tags": ["projek", "pilot"],
+  "query": "report",
+  "tags": ["project", "pilot"],
   "dateFrom": "2026-02-01",
   "dateTo": "2026-02-28"
 }
