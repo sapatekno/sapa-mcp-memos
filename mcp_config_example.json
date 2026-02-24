@@ -1,0 +1,22 @@
+{
+  "mcpServers": {
+    "sapa-memos": {
+      "command": "path/memos-mcp.exe",
+      "args": [
+        "url",
+        "https://domain_memos.com",
+        "token",
+        "memos_pat_****************",
+        "readonly",
+        "false",
+        "disabled",
+        "false",
+        "needApprove",
+        "true"
+      ],
+      "readonly": false,
+      "disabled": false,
+      "needApprove": true
+    }
+  }
+}
